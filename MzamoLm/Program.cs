@@ -10,11 +10,13 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MzamoLm
 {
-    internal class Program
+    public class Program
     {
         public static string Chatbot; //private string so the loop runs many times
         static void Main(string[] args)
         {
+            //new instance logo
+            new AsciiLogo() { };
             //personalised recorded voice greeting
             VoiceGreeting();
             //display ASCII 
