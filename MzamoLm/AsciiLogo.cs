@@ -15,7 +15,7 @@ namespace MzamoLm
         {
             try
             {
-                SKBitmap image = SKBitmap.Decode("AsciiLogo.jpeg");
+                //SKBitmap image = SKBitmap.Decode("AsciiLogo.jpeg");
                 AppContext.SetSwitch("System.Drawing.EnableUnixSupport", true);// for Linux setup
                 //file path
                 string sProjectPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -30,23 +30,29 @@ namespace MzamoLm
                 //prepare to load image
                 if (File.Exists(sFullPath))
                 {
-                    image = new Bitmap(sFullPath);
+                    /*image = new Bitmap(sFullPath);
                     image = new Bitmap(image, new(210, 200));//format
+                    */
+                    new Program() { };
+                    Program.BotColor();
                     Console.WriteLine("AsciiLogo.jpeg WAS SUCCESFULLY LOADED!");
+                    using (Bitmap originalImage = new Bitmap(sFullPath))
+                    {
+                        image = new Bitmap(originalImage, new Size(210, 200));
+                    }
+
                 }
                 else
                 {
-
+                    Program.BotColor();
                     Console.WriteLine("ERROR!\nAsciiLogo.jpeg WAS NOT FOUND!");
                 }
             }
             catch ( Exception ex)
             {
+                Program.BotColor();
                 Console.WriteLine("ERROR!\nAsciiLogo.jpeg WAS NOT FOUND!");
             }
-
-
-
         }
     }
 }

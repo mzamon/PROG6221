@@ -13,8 +13,27 @@ namespace MzamoLm
     public class Program
     {
         public static string Chatbot; //private string so the loop runs many times
+        //global array
+        public static string[] Questions = {
+                                            "\nHow are you?",
+                                            "\nWhat's your purpose?",
+                                            "\nWhat can I ask you about?",
+                                            "\nWhat is password safety?",
+                                            "\nWhat is phishing?",
+                                            "\nWhat is safe browsing?"
+                                            };
+        public static string[] Responses = {
+                                            "\nI'm just a bot, but I'm here to help you stay safe online!\nI have no feelings whatsoever!",
+                                            "\nMy purpose is to educate users about cybersecurity and help them stay safe online!\nALL THIS WHILST LEARNING MORE!",
+                                            "\nYou can ask me about the following!\nPassword safety, Phishing, Safe browsing & any other Cybersecurity related topics!",
+                                            "\nAlways use strong, unique passwords for each account. Avoid using personal details in your passwords.\nDefinition: Password Safety\nPassword safety is the practice of creating, managing, and protecting strong passwords to prevent unauthorized access to accounts and personal information. It includes using unique, complex passwords, enabling two-factor authentication (2FA), avoiding password reuse, and being cautious of phishing attacks and data breaches. ",
+                                            "\nBe cautious of emails asking for personal information. Scammers often disguise themselves as trusted organizations.\nDefinition :Phishing\nPhishing is a cyberattack where scammers trick people into revealing sensitive information—like passwords, credit card details, or personal data—by pretending to be a trusted entity, usually through fake emails, messages, or websites.",
+                                            "\nOnly visit trusted websites and be wary of suspicious links or downloads.\neg: Use links that are secure like this one\nhttps://www.google.com/"
+                                        };
+        public static Boolean bFlag = false;
         static void Main(string[] args)
         {
+            Chatbot = "hello"; //Activate
             //new instance logo
             new AsciiLogo() { };
             //personalised recorded voice greeting
@@ -23,22 +42,26 @@ namespace MzamoLm
             DisplayAsciiArt();
             //welcoming and interactive experience.
             TextUserInteractionGreeting();
-            BasicResponse();
-            Chatbot = "hello"; //Activate
             //Creates an AI feel
             TypeEffect();
             //Shift text from user to Bot
             UserColor();
             BotColor();
+            while (!bFlag)
+            {
+                BasicResponse();//Run until out of loop
+            }
         }
 
         public static void BotColor()
         {
             Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\nBot: ");
         }
         public static void UserColor()
         {
             Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\nUser:  ");
         }
         public static void TypeEffect()
         {
@@ -50,7 +73,7 @@ namespace MzamoLm
             }
         }
 
-        private static void VoiceGreeting()
+        public static void VoiceGreeting()
         {
             // Attempt to GREETING.wav with spectrum 
             //Spectrum works on higher version of C# /*
@@ -78,7 +101,7 @@ namespace MzamoLm
             }
             catch (DllNotFoundException ex)
             {
-                Console.WriteLine("WASAPI not available, switching to an alternative: " + ex.Message);
+                Console.WriteLine("Error while playing voice greeting.wav " + ex.Message);
                 // Fallback to DirectSound
             }
         }
@@ -120,23 +143,36 @@ namespace MzamoLm
              * Create responses for questions like "How are you?", "What’s your purpose?", and "What can I ask you about?" 
                Include topics related to password safety, phishing, and safe browsing.
              */
+            while (!bFlag)
+            {
+                //array for questions 
+                BotColor();
+                Chatbot = "You can start asking me a question cybersecurity related!";
+                TypeEffect();
 
-            //array for questions 
-            BotColor();
-            string[] BasicQuestions = { @"[1]How are you?" 
-                                        , "[2]What's your purpose?"
-                                        , "[3]What can I ask you about?"
-                                        //eol
-                                      };
-            //TypeEffect()
-            foreach (string type in BasicQuestions) { 
-                foreach (char c in type)
+                //User inputs question
+                UserColor();
+                string sUserInput = Console.ReadLine().ToLower();  //lowercase
+
+                for (int k = 0; k < Questions.Length; k++)
                 {
-                    Console.Write(c);
-                    Thread.Sleep(50); // type effect
+                    if (Questions[k] == sUserInput)
+                    {
+                        BotColor();
+                        Chatbot = Responses[k];
+                        TypeEffect();
+                        //Console.WriteLine(Responses[k]);
+                        break;
+                    }
+                    else if (k == Questions.Length - 1)
+                    {
+                        BotColor();
+                        Chatbot = "I'm not sure how to respond to that question!.\nCan you ask me something else related to cybersecurity?\nDo you need help?";
+                        TypeEffect();
+                    }
                 }
-                Console.WriteLine();//new line per question
-            }
+                Console.WriteLine();
+            }                     
         }
 
         static void TextUserInteractionGreeting()
@@ -193,8 +229,12 @@ namespace MzamoLm
                                + "Ask me something !\n\n"
                                 );            
         }
-        static void DisplayAsciiArt()
+        public static void DisplayAsciiArt()
         {
+            /*// Now do the bitmap image
+            new AsciiLogo() { };
+            Thread.Sleep (200);
+            */
             string[] asciiArt = { @"
                               
                                   _____                    _____                    _____                    _____                   _______                           _____            _____          
@@ -234,7 +274,7 @@ namespace MzamoLm
                 }
                 Console.WriteLine(); // Nextln
             }
-            Console.Clear();
+            //Console.Clear();
 
             int screenWidth = Console.WindowWidth;
             int iCount = 0; // show ascii 10 times
@@ -275,7 +315,7 @@ namespace MzamoLm
                 for (int i = 0; i < screenWidth - 10; i++) //To right
                 {
                     if (bLoopBreak) break; //Exit loop if bflag
-                    Console.Clear();
+                    //Console.Clear();
 
                     // Instantiate display
                     string display = "";
@@ -305,7 +345,7 @@ namespace MzamoLm
                     Thread.Sleep(50); // Control speed
                 }
             }
-
+                        
             // Reset the console color back to default after the loop
             Console.ResetColor();
         }
