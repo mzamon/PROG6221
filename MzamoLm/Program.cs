@@ -79,16 +79,16 @@ namespace MzamoLm
             
             //Creates an AI feel
             TypeEffect();
-            //Shift text from user to Bot
+            /*//Shift text from user to Bot
             UserColor();
             BotColor();
-            
+            */
             //Chatbot strign
             Chatbot = Console.ReadLine();
             while (!bFlag)
             {
-                BasicResponse();//Run until out of loop
                 ChekcIfExit();
+                BasicResponse();//Run until out of loop               
             }
             
         }
@@ -99,7 +99,7 @@ namespace MzamoLm
             if (Chatbot.Contains("exit"))
             {
                 BotColor();
-                Console.WriteLine("\nEXTT DETECTED!\nCLOSING APP!");
+                Console.WriteLine("EXTT DETECTED!\nCLOSING APP!");
                 bFlag = true;
             }
         }
@@ -127,14 +127,12 @@ namespace MzamoLm
 
         public static void VoiceGreeting() 
         {
-            // Attempt to GREETING.wav with spectrum 
-            //Spectrum works on higher version of C# /*
             //https://youtu.be/uZlz1SSisYY
             try
             {   //Play first
                 PlayMusic("GREETING.wav");
                 BotColor();
-                Console.WriteLine("Greeting Audio");
+                Console.WriteLine("Welcome audio is playing");
                             }
             catch (DllNotFoundException ex)
             {
@@ -150,8 +148,7 @@ namespace MzamoLm
         //Used method is private.. change to public.
         public static void BasicResponse()
         {
-            //throw new NotImplementedException();
-            /*
+             /*
              * Create responses for questions like "How are you?", "What’s your purpose?", and "What can I ask you about?" 
                Include topics related to password safety, phishing, and safe browsing.
              */
@@ -169,12 +166,97 @@ namespace MzamoLm
 
                 for (int k = 0; k < Questions.Length; k++)
                 {
+                    //run nested if for basic one word responses
+                    if (sUserInput != null)
+                    {
+                        sUserInput = sUserInput.ToLower();
+
+                        if (sUserInput.Contains("password"))
+                        {
+                            if (sUserInput.Contains("strong") || sUserInput.Contains("create"))
+                            {
+                                Console.WriteLine(Responses[6]); // Strong password
+                            }
+                            else
+                            {
+                                Console.WriteLine(Responses[3]); // General password safety
+                            }
+                        }
+                        else if (sUserInput.Contains("phishing"))
+                        {
+                            if (sUserInput.Contains("email") || sUserInput.Contains("detect"))
+                            {
+                                Console.WriteLine(Responses[9]); // Phishing email signs
+                            }
+                            else
+                            {
+                                Console.WriteLine(Responses[4]); // General phishing info
+                            }
+                        }
+                        else if (sUserInput.Contains("safe") && sUserInput.Contains("browsing"))
+                        {
+                            Console.WriteLine(Responses[5]); // Safe browsing
+                        }
+                        else if (sUserInput.Contains("scam") || sUserInput.Contains("avoid"))
+                        {
+                            Console.WriteLine(Responses[7]); // Avoiding scams
+                        }
+                        else if (sUserInput.Contains("hacked"))
+                        {
+                            Console.WriteLine(Responses[8]); // If you're hacked
+                        }
+                        else if (sUserInput.Contains("wifi") || sUserInput.Contains("public network"))
+                        {
+                            Console.WriteLine(Responses[10]); // Public Wi-Fi warning
+                        }
+                        else if (sUserInput.Contains("2fa") || sUserInput.Contains("two factor"))
+                        {
+                            Console.WriteLine(Responses[11]); // 2FA explanation
+                        }
+                        else if (sUserInput.Contains("update") || sUserInput.Contains("software"))
+                        {
+                            Console.WriteLine(Responses[12]); // Importance of updates
+                        }
+                        else if (sUserInput.Contains("malware"))
+                        {
+                            Console.WriteLine(Responses[13]); // Malware explanation
+                        }
+                        else if (sUserInput.Contains("personal information") || sUserInput.Contains("data privacy"))
+                        {
+                            Console.WriteLine(Responses[14]); // Protecting personal info
+                        }
+                        else if (sUserInput.Contains("link"))
+                        {
+                            Console.WriteLine(Responses[15]); // If you click a bad link
+                        }
+                        else if (sUserInput.Contains("https") || sUserInput.Contains("secure site"))
+                        {
+                            Console.WriteLine(Responses[16]); // Secure website tips
+                        }
+                        else if (sUserInput.Contains("antivirus"))
+                        {
+                            Console.WriteLine(Responses[17]); // Antivirus usage
+                        }
+                        else if (sUserInput.Contains("social media") || sUserInput.Contains("privacy"))
+                        {
+                            Console.WriteLine(Responses[18]); // Social media tips
+                        }
+                        else if (sUserInput.Contains("firewall"))
+                        {
+                            Console.WriteLine(Responses[19]); // Firewall explanation
+                        }
+                        else
+                        {
+                            Console.WriteLine("I'm not sure how to respond to that. Try asking about passwords, phishing, or safe browsing!");
+                        }
+                    }
+
                     if (Questions[k] == sUserInput)
                     {
+                        ChekcIfExit();
                         BotColor();
                         Chatbot = Responses[k];
                         TypeEffect();
-                        //Console.WriteLine(Responses[k]);
                         break;
                     }
                     else if (k == Questions.Length - 1)
@@ -182,6 +264,7 @@ namespace MzamoLm
                         BotColor();
                         Chatbot = "I'm not sure how to respond to that question!.\nCan you ask me something else related to cybersecurity?\nDo you need help?";
                         TypeEffect();
+                        ChekcIfExit();
                     }
                 }
                 Console.WriteLine();
@@ -233,7 +316,6 @@ namespace MzamoLm
             string sSurname = Console.ReadLine();
             ChekcIfExit();
             //personalized greeting 
-            UserColor();
             //28/03/25
             BotColor();
             Console.WriteLine(    "----------------------------------------"
