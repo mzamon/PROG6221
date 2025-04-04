@@ -87,7 +87,19 @@ namespace MzamoLm
             Chatbot = Console.ReadLine();
             while (!bFlag)
             {
-                ChekcIfExit();
+                if (Chatbot.Contains("exit"))
+                {
+                    BotColor();
+                    Console.WriteLine("EXIT DETECTED!\nCLOSING APP!");
+                    bFlag = true;
+                }
+                else
+                {
+                    //Run until out of loop
+                    BotColor();
+                    Chatbot = "You can start asking me a question cybersecurity related!";
+                    TypeEffect();
+                }
                 BasicResponse();//Run until out of loop               
             }
             
