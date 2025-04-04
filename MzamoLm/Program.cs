@@ -15,20 +15,48 @@ namespace MzamoLm
         public static string Chatbot; //private string so the loop runs many times
         //global array
         public static string[] Questions = {
-                                            "\nHow are you?",
-                                            "\nWhat's your purpose?",
-                                            "\nWhat can I ask you about?",
-                                            "\nWhat is password safety?",
-                                            "\nWhat is phishing?",
-                                            "\nWhat is safe browsing?"
+                                                "\nHow are you?",
+                                                "\nWhat's your purpose?",
+                                                "\nWhat can I ask you about?",
+                                                "\nWhat is password safety?",
+                                                "\nWhat is phishing?",
+                                                "\nWhat is safe browsing?",
+                                                "\nWhat are strong passwords?",
+                                                "\nHow do I avoid scams online?",
+                                                "\nWhat should I do if I get hacked?",
+                                                "\nHow do I recognize a phishing email?",
+                                                "\nIs public Wi-Fi safe?",
+                                                "\nWhat is two-factor authentication?",
+                                                "\nWhy should I update my software?",
+                                                "\nWhat is malware?",
+                                                "\nHow do I protect my personal information?",
+                                                "\nWhat should I do if I click a suspicious link?",
+                                                "\nWhat are secure websites?",
+                                                "\nWhy is antivirus important?",
+                                                "\nCan social media be risky?",
+                                                "\nWhat is a firewall?"
                                             };
         public static string[] Responses = {
-                                            "\nI'm just a bot, but I'm here to help you stay safe online!\nI have no feelings whatsoever!",
-                                            "\nMy purpose is to educate users about cybersecurity and help them stay safe online!\nALL THIS WHILST LEARNING MORE!",
-                                            "\nYou can ask me about the following!\nPassword safety, Phishing, Safe browsing & any other Cybersecurity related topics!",
-                                            "\nAlways use strong, unique passwords for each account. Avoid using personal details in your passwords.\nDefinition: Password Safety\nPassword safety is the practice of creating, managing, and protecting strong passwords to prevent unauthorized access to accounts and personal information. It includes using unique, complex passwords, enabling two-factor authentication (2FA), avoiding password reuse, and being cautious of phishing attacks and data breaches. ",
-                                            "\nBe cautious of emails asking for personal information. Scammers often disguise themselves as trusted organizations.\nDefinition :Phishing\nPhishing is a cyberattack where scammers trick people into revealing sensitive information—like passwords, credit card details, or personal data—by pretending to be a trusted entity, usually through fake emails, messages, or websites.",
-                                            "\nOnly visit trusted websites and be wary of suspicious links or downloads.\neg: Use links that are secure like this one\nhttps://www.google.com/"
+                                                "\nI'm just a bot, but I'm here to help you stay safe online!\nI have no feelings whatsoever!",
+                                                "\nMy purpose is to educate users about cybersecurity and help them stay safe online!\nALL THIS WHILST LEARNING MORE!",
+                                                "\nYou can ask me about the following!\nPassword safety, Phishing, Safe browsing & any other Cybersecurity related topics!",
+                                                "\nAlways use strong, unique passwords for each account. Avoid using personal details in your passwords.\nDefinition: Password Safety\nPassword safety is the practice of creating, managing, and protecting strong passwords to prevent unauthorized access to accounts and personal information. It includes using unique, complex passwords, enabling two-factor authentication (2FA), avoiding password reuse, and being cautious of phishing attacks and data breaches.",
+                                                "\nBe cautious of emails asking for personal information. Scammers often disguise themselves as trusted organizations.\nDefinition :Phishing\nPhishing is a cyberattack where scammers trick people into revealing sensitive information—like passwords, credit card details, or personal data—by pretending to be a trusted entity, usually through fake emails, messages, or websites.",
+                                                "\nOnly visit trusted websites and be wary of suspicious links or downloads.\neg: Use links that are secure like this one\nhttps://www.google.com/",
+                                                "\nA strong password is at least 12 characters long, uses a mix of letters, numbers, and symbols, and avoids dictionary words or patterns.\nTry something like: G3k#82!r9Lp%",
+                                                "\nAvoid scams by not clicking on suspicious links, verifying sources before sharing information, and never sending personal details through unknown emails or messages.",
+                                                "\nIf you suspect you've been hacked, change your passwords immediately, enable 2FA, run antivirus software, and inform your contacts.",
+                                                "\nPhishing emails often create urgency, contain grammatical errors, and ask you to click suspicious links or share sensitive info. Always verify the sender!",
+                                                "\nPublic Wi-Fi can be risky. Avoid logging into sensitive accounts or making purchases on public networks unless you're using a VPN.",
+                                                "\nTwo-Factor Authentication (2FA) adds an extra layer of security by requiring something you know (like a password) and something you have (like a phone).",
+                                                "\nSoftware updates fix security vulnerabilities. Always keep your system, apps, and antivirus software up to date to stay protected.",
+                                                "\nMalware is any malicious software designed to harm, exploit, or damage a system. It includes viruses, worms, trojans, spyware, and ransomware.",
+                                                "\nProtect personal info by using strong passwords, limiting what you share online, and reviewing app and website permissions.",
+                                                "\nIf you click a suspicious link, disconnect from the internet, run a virus scan, and change passwords. Don’t enter any personal info if prompted!",
+                                                "\nSecure websites start with 'https://' and show a padlock icon in the address bar. These encrypt your data for safer browsing.",
+                                                "\nAntivirus software detects and removes malicious software. It’s a must-have defense tool against many forms of cyber threats.",
+                                                "\nSocial media can expose personal info. Adjust privacy settings, think before you post, and don’t accept friend requests from strangers.",
+                                                "\nA firewall is a security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules. It acts as a barrier between your device and potential threats."
                                             };
         public static string[] UserInputs;//array to store user inputs
 
@@ -64,7 +92,6 @@ namespace MzamoLm
             }
             
         }
-
         private static void ChekcIfExit()
         {
             //throw new NotImplementedException();
@@ -76,17 +103,16 @@ namespace MzamoLm
                 bFlag = true;
             }
         }
-
         public static void BotColor()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\nBot: ");
+            Console.WriteLine("Bot: ");
             
         }
         public static void UserColor()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\nUser:  ");
+            Console.WriteLine("User: ");
             
         }
         public static void TypeEffect()
@@ -99,7 +125,7 @@ namespace MzamoLm
             }
         }
 
-        public static void VoiceGreeting()
+        public static void VoiceGreeting() 
         {
             // Attempt to GREETING.wav with spectrum 
             //Spectrum works on higher version of C# /*
@@ -109,22 +135,7 @@ namespace MzamoLm
                 PlayMusic("GREETING.wav");
                 BotColor();
                 Console.WriteLine("Greeting Audio");
-
-                /*//Load GREETING.wav 
-                using var audioFile = new AudioFileReader("GREETING.wav");
-                object filename = null;
-                using var outputDevice = new WaveOutEvent(filename);
-                outputDevice.Init(audioFile);
-                outputDevice.Play();
-
-                // Perform FFT and visualize (pseudo-code)
-                while (audioFile.Position < audioFile.Length)
-                {
-                    var fftData = PerformFFT(audioFile); // Your FFT processing here
-                    UpdateSpectrum(fftData);            // Render the spectrum visualization
-                    Thread.Sleep(16);                   // ~60 FPS
-                }*/
-            }
+                            }
             catch (DllNotFoundException ex)
             {
                 Console.WriteLine("Error while playing voice greeting.wav " + ex.Message);
@@ -136,31 +147,6 @@ namespace MzamoLm
             musicPlayer.SoundLocation = filepath;
             musicPlayer.Play();
         }
-
-        /*
-        // Placeholder for the FFT processing method
-        private static float[] PerformFFT(AudioFileReader audioFile)
-        {
-            // Implement FFT analysis logic here
-            // For now, return a dummy array representing frequency bins
-            return new float[256];
-        }
-
-        // Placeholder for the spectrum visualization method
-        private static void UpdateSpectrum(float[] fftData)
-        {
-            // Render the spectrum based on FFT data
-            // Example: Print the maximum frequency amplitude to console (just for demonstration)
-            float maxAmplitude = 0f;
-            foreach (var amplitude in fftData)
-            {
-                if (amplitude > maxAmplitude) maxAmplitude = amplitude;
-            }
-            Console.WriteLine($"Max Amplitude: {maxAmplitude}");
-        }
-         
-     }*/
-
         //Used method is private.. change to public.
         public static void BasicResponse()
         {
@@ -176,7 +162,6 @@ namespace MzamoLm
                 BotColor();
                 Chatbot = "You can start asking me a question cybersecurity related!";
                 TypeEffect();
-
                 //User inputs question
                 UserColor();
                 string sUserInput = Console.ReadLine().ToLower();  //lowercase
@@ -202,7 +187,6 @@ namespace MzamoLm
                 Console.WriteLine();
             }                     
         }
-
         static void TextUserInteractionGreeting()
         {
             //add welcome + interactive xp
