@@ -22,36 +22,55 @@ namespace MzamoLm
                 //bin/debug
                 string sNewProjectPath = sProjectPath.Replace("bin\\Debug\\", "");
                 //full path
-                string sFullPath = Path.Combine(sNewProjectPath, "AsciiLogo.jpeg");
+                string sFullPath = Path.Combine(sNewProjectPath, "AsciiLogo.bmp");
                 //Ascii conversion 
-                /*Bitmap = new Bitmap(sFullPath);
-                image = new Bitmap(image, new Size(210, 200));
-                */
                 //prepare to load image
-                if (File.Exists(sFullPath))
+                if (!File.Exists(sFullPath))
                 {
-                    /*image = new Bitmap(sFullPath);
-                    image = new Bitmap(image, new(210, 200));//format
-                    */
-                    new Program() { };
                     Program.BotColor();
-                    Console.WriteLine("AsciiLogo.jpeg WAS SUCCESFULLY LOADED!");
-                    using (Bitmap originalImage = new Bitmap(sFullPath))
-                    {
-                        image = new Bitmap(originalImage, new Size(210, 200));
-                    }
+                    Console.WriteLine("ERROR!\nAsciiLogo.bmp WAS NOT FOUND!");
+                    return;
+                }
 
-                }
-                else
+                //Load image
+                using (Bitmap originalImage = new Bitmap(sFullPath))
                 {
-                    Program.BotColor();
-                    Console.WriteLine("ERROR!\nAsciiLogo.jpeg WAS NOT FOUND!");
+                    // Resize the image to a specific width and height
+                    image = new Bitmap(originalImage, new Size(200, 200)); 
                 }
+                
+                Console.WriteLine("Successfully loaded bitmap!");
+                //Show ASCII art
+                Console.ForegroundColor = ConsoleColor.Blue;   
+                AsciiLogoT();
             }
-            catch ( Exception ex)
+            catch ( Exception error)
             {
                 Program.BotColor();
-                Console.WriteLine("ERROR!\nAsciiLogo.jpeg WAS NOT FOUND!");
+                Console.WriteLine("ERROR!\nAsciiLogo.bmp WAS NOT FOUND!" +  error.Message);
+            }
+        }
+        public static void AsciiLogoT()
+        {
+            
+            Bitmap bmp = new Bitmap("AsciiLogo.bmp");
+
+            if (bmp == null)
+            {
+                Console.WriteLine("No image to convert to ASCII.");
+                return;
+            }
+
+            for (int y = 0; y < bmp.Height; y += 5)
+            {
+                for (int x = 0; x < bmp.Width; x += 2)
+                {
+                    Color pixelColor = bmp.GetPixel(x, y);
+                    int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+                    char asciiChar = gray < 128 ? '#' : '.';
+                    Console.Write(asciiChar);
+                }
+                Console.WriteLine();
             }
         }
     }

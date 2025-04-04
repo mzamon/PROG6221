@@ -29,27 +29,51 @@ namespace MzamoLm
                                             "\nAlways use strong, unique passwords for each account. Avoid using personal details in your passwords.\nDefinition: Password Safety\nPassword safety is the practice of creating, managing, and protecting strong passwords to prevent unauthorized access to accounts and personal information. It includes using unique, complex passwords, enabling two-factor authentication (2FA), avoiding password reuse, and being cautious of phishing attacks and data breaches. ",
                                             "\nBe cautious of emails asking for personal information. Scammers often disguise themselves as trusted organizations.\nDefinition :Phishing\nPhishing is a cyberattack where scammers trick people into revealing sensitive information—like passwords, credit card details, or personal data—by pretending to be a trusted entity, usually through fake emails, messages, or websites.",
                                             "\nOnly visit trusted websites and be wary of suspicious links or downloads.\neg: Use links that are secure like this one\nhttps://www.google.com/"
-                                        };
+                                            };
+        public static string[] UserInputs;//array to store user inputs
+
         public static Boolean bFlag = false;
         static void Main(string[] args)
-        {
-            Chatbot = "hello"; //Activate
-            //new instance logo
-            new AsciiLogo() { };
+        { 
+             Chatbot = "hello"; //Activate
             //personalised recorded voice greeting
             VoiceGreeting();
+            Thread.Sleep(500); 
+            
             //display ASCII 
             DisplayAsciiArt();
+
+            //new instance logo
+            new AsciiLogo() { };
+
             //welcoming and interactive experience.
             TextUserInteractionGreeting();
+            
             //Creates an AI feel
             TypeEffect();
             //Shift text from user to Bot
             UserColor();
             BotColor();
+            
+            //Chatbot strign
+            Chatbot = Console.ReadLine();
             while (!bFlag)
             {
                 BasicResponse();//Run until out of loop
+                ChekcIfExit();
+            }
+            
+        }
+
+        private static void ChekcIfExit()
+        {
+            //throw new NotImplementedException();
+            Chatbot = Console.ReadLine();
+            if (Chatbot.Contains("exit"))
+            {
+                BotColor();
+                Console.WriteLine("\nEXTT DETECTED!\nCLOSING APP!");
+                bFlag = true;
             }
         }
 
@@ -57,11 +81,13 @@ namespace MzamoLm
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nBot: ");
+            
         }
         public static void UserColor()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\nUser:  ");
+            
         }
         public static void TypeEffect()
         {
@@ -136,7 +162,7 @@ namespace MzamoLm
      }*/
 
         //Used method is private.. change to public.
-        private static void BasicResponse()
+        public static void BasicResponse()
         {
             //throw new NotImplementedException();
             /*
@@ -145,6 +171,7 @@ namespace MzamoLm
              */
             while (!bFlag)
             {
+                ChekcIfExit();
                 //array for questions 
                 BotColor();
                 Chatbot = "You can start asking me a question cybersecurity related!";
@@ -153,6 +180,7 @@ namespace MzamoLm
                 //User inputs question
                 UserColor();
                 string sUserInput = Console.ReadLine().ToLower();  //lowercase
+                ChekcIfExit();
 
                 for (int k = 0; k < Questions.Length; k++)
                 {
@@ -211,6 +239,7 @@ namespace MzamoLm
             TypeEffect();
             UserColor();
             string sName = Console.ReadLine();
+            ChekcIfExit();
             BotColor();
             Entername = "\nEnter your surname:\n";
             //TypeEffect
@@ -218,6 +247,7 @@ namespace MzamoLm
             TypeEffect();            
             UserColor();
             string sSurname = Console.ReadLine();
+            ChekcIfExit();
             //personalized greeting 
             UserColor();
             //28/03/25
@@ -231,10 +261,8 @@ namespace MzamoLm
         }
         public static void DisplayAsciiArt()
         {
-            /*// Now do the bitmap image
-            new AsciiLogo() { };
-            Thread.Sleep (200);
-            */
+            // Now do the bitmap image
+           
             string[] asciiArt = { @"
                               
                                   _____                    _____                    _____                    _____                   _______                           _____            _____          
@@ -261,11 +289,7 @@ namespace MzamoLm
                                                                                                                                                                                
                         © 2025 MZAMO LM. All Rights Reserved."
             };
-            //string Display = Array.AsReadOnly(asciiArt); ;
 
-            /*int Count = 1; /* set at 0
-                            * CHANGE THIS VALUE >> FASTER DEBUG TIME
-                            */
             foreach (string line in asciiArt)
             {
                 foreach (char c in line)
@@ -274,39 +298,12 @@ namespace MzamoLm
                 }
                 Console.WriteLine(); // Nextln
             }
-            //Console.Clear();
+            Console.Clear();
 
             int screenWidth = Console.WindowWidth;
             int iCount = 0; // show ascii 10 times
             bool bLoopBreak = false; //bflag
 
-                /*CODE TO MOVE THE ASCII AROUND
-                 * 
-                for (int round = 0; round < 2; round++) // 2 right
-                {
-                    if (LoopBreak == true) break; // loopkill
-
-                    for (int i = 0; i < screenWidth - 10; i++) // Move right
-                    {
-                        if (LoopBreak == true) break; // loopkill
-                        Console.Clear();
-                        for (int j = 0; j < asciiArt.Length; j++)
-                        {
-                            if (LoopBreak == true) break; // loopkill
-                            iCount++;
-                            Console.SetCursorPosition(i, j);
-                            Console.Write(asciiArt[j]);
-                            if (iCount == 10)
-                            {
-                                LoopBreak = true; //ser to true so all other loops may break
-                                break; //exit loop
-                            }
-
-
-                        }
-                        Thread.Sleep(50); // Control speed of movement
-                    }
-                */
             // Loop through the ASCII Art for movement
             for (int iRround = 0; iRround < 2; iRround++) //To twice
             {
@@ -315,7 +312,7 @@ namespace MzamoLm
                 for (int i = 0; i < screenWidth - 10; i++) //To right
                 {
                     if (bLoopBreak) break; //Exit loop if bflag
-                    //Console.Clear();
+                    Console.Clear();
 
                     // Instantiate display
                     string display = "";
