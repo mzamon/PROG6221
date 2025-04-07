@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Media;
-//using NAudio.Wave;
+//using NAudio.Wave;    
 using static System.Net.Mime.MediaTypeNames;
 
 namespace MzamoLm
@@ -410,7 +410,7 @@ namespace MzamoLm
                         Console.SetCursorPosition(i, j);
                         Console.Write(asciiArt[j]);
 
-                        if (iCount == 10)
+                        if (iCount == 10) 
                         {
                             bLoopBreak = true; //bflag
                             break; // Exit the loop
