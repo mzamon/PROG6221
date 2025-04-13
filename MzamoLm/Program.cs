@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Media;
 //using NAudio.Wave;    
 using static System.Net.Mime.MediaTypeNames;
+using System.IO;
 
 namespace MzamoLm
 {
@@ -87,22 +88,11 @@ namespace MzamoLm
             Chatbot = Console.ReadLine();
             while (!bFlag)
             {
-                if (Chatbot.Contains("exit"))
-                {
-                    BotColor();
-                    Console.WriteLine("EXIT DETECTED!\nCLOSING APP!");
-                    bFlag = true;
-                }
-                else
-                {
-                    //Run until out of loop
-                    BotColor();
-                    Chatbot = "You can start asking me a question cybersecurity related!";
-                    TypeEffect();
-                }
-                BasicResponse();//Run until out of loop               
+                BasicResponse();
             }
-            
+
+            BotColor();
+            Console.WriteLine("EXIT DETECTED!\nCLOSING APP!");
         }
         private static void ChekcIfExit()
         {
@@ -118,14 +108,14 @@ namespace MzamoLm
         public static void BotColor()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Bot: ");
-            
+            Console.Write("\nBot: ");
+            Console.ForegroundColor = ConsoleColor.Magenta;
         }
         public static void UserColor()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("User: ");
-            
+            Console.Write("\nUser: ");
+            Console.ForegroundColor = ConsoleColor.DarkYellow; // Set the rest of the text to orange    
         }
         public static void TypeEffect()
         {
@@ -136,22 +126,27 @@ namespace MzamoLm
                 Thread.Sleep(50); // type effect
             }
         }
-
         public static void VoiceGreeting() 
         {
             //https://youtu.be/uZlz1SSisYY
-            try
-            {   //Play first
-                PlayMusic("GREETING.wav");
-                BotColor();
-                Console.WriteLine("Welcome audio is playing");
-                            }
-            catch (DllNotFoundException ex)
+            if (File.Exists("GREETING.wav"))
             {
-                Console.WriteLine("Error while playing voice greeting.wav " + ex.Message);
-                // Fallback to DirectSound
+                try
+                {   //Play first
+                    PlayMusic("GREETING.wav");
+                    BotColor();
+                    Console.WriteLine("Welcome audio is playing");
+                }
+                catch (DllNotFoundException ex)
+                {
+                    Console.WriteLine("Error while playing voice greeting.wav " + ex.Message);
+                    // Fallback to DirectSound
+                }
+            }else{
+                //File not found
+                Console.WriteLine("GREETING.wav not found!");
             }
-        }
+            }
         public static void PlayMusic(string filepath) {
             SoundPlayer musicPlayer = new SoundPlayer();
             musicPlayer.SoundLocation = filepath;
@@ -166,7 +161,7 @@ namespace MzamoLm
              */
             while (!bFlag)
             {
-                ChekcIfExit();
+                
                 //array for questions 
                 BotColor();
                 Chatbot = "You can start asking me a question cybersecurity related!";
@@ -174,113 +169,117 @@ namespace MzamoLm
                 //User inputs question
                 UserColor();
                 string sUserInput = Console.ReadLine().ToLower();  //lowercase
-                ChekcIfExit();
-
-                for (int k = 0; k < Questions.Length; k++)
+                if (sUserInput == "exit")
                 {
-                    //run nested if for basic one word responses
-                    if (sUserInput != null)
-                    {
-                        sUserInput = sUserInput.ToLower();
-
-                        if (sUserInput.Contains("password"))
-                        {
-                            if (sUserInput.Contains("strong") || sUserInput.Contains("create"))
-                            {
-                                Console.WriteLine(Responses[6]); // Strong password
-                            }
-                            else
-                            {
-                                Console.WriteLine(Responses[3]); // General password safety
-                            }
-                        }
-                        else if (sUserInput.Contains("phishing"))
-                        {
-                            if (sUserInput.Contains("email") || sUserInput.Contains("detect"))
-                            {
-                                Console.WriteLine(Responses[9]); // Phishing email signs
-                            }
-                            else
-                            {
-                                Console.WriteLine(Responses[4]); // General phishing info
-                            }
-                        }
-                        else if (sUserInput.Contains("safe") && sUserInput.Contains("browsing"))
-                        {
-                            Console.WriteLine(Responses[5]); // Safe browsing
-                        }
-                        else if (sUserInput.Contains("scam") || sUserInput.Contains("avoid"))
-                        {
-                            Console.WriteLine(Responses[7]); // Avoiding scams
-                        }
-                        else if (sUserInput.Contains("hacked"))
-                        {
-                            Console.WriteLine(Responses[8]); // If you're hacked
-                        }
-                        else if (sUserInput.Contains("wifi") || sUserInput.Contains("public network"))
-                        {
-                            Console.WriteLine(Responses[10]); // Public Wi-Fi warning
-                        }
-                        else if (sUserInput.Contains("2fa") || sUserInput.Contains("two factor"))
-                        {
-                            Console.WriteLine(Responses[11]); // 2FA explanation
-                        }
-                        else if (sUserInput.Contains("update") || sUserInput.Contains("software"))
-                        {
-                            Console.WriteLine(Responses[12]); // Importance of updates
-                        }
-                        else if (sUserInput.Contains("malware"))
-                        {
-                            Console.WriteLine(Responses[13]); // Malware explanation
-                        }
-                        else if (sUserInput.Contains("personal information") || sUserInput.Contains("data privacy"))
-                        {
-                            Console.WriteLine(Responses[14]); // Protecting personal info
-                        }
-                        else if (sUserInput.Contains("link"))
-                        {
-                            Console.WriteLine(Responses[15]); // If you click a bad link
-                        }
-                        else if (sUserInput.Contains("https") || sUserInput.Contains("secure site"))
-                        {
-                            Console.WriteLine(Responses[16]); // Secure website tips
-                        }
-                        else if (sUserInput.Contains("antivirus"))
-                        {
-                            Console.WriteLine(Responses[17]); // Antivirus usage
-                        }
-                        else if (sUserInput.Contains("social media") || sUserInput.Contains("privacy"))
-                        {
-                            Console.WriteLine(Responses[18]); // Social media tips
-                        }
-                        else if (sUserInput.Contains("firewall"))
-                        {
-                            Console.WriteLine(Responses[19]); // Firewall explanation
-                        }
-                        else
-                        {
-                            Console.WriteLine("I'm not sure how to respond to that. Try asking about passwords, phishing, or safe browsing!");
-                        }
-                    }
-
-                    if (Questions[k] == sUserInput)
-                    {
-                        ChekcIfExit();
-                        BotColor();
-                        Chatbot = Responses[k];
-                        TypeEffect();
-                        break;
-                    }
-                    else if (k == Questions.Length - 1)
-                    {
-                        BotColor();
-                        Chatbot = "I'm not sure how to respond to that question!.\nCan you ask me something else related to cybersecurity?\nDo you need help?";
-                        TypeEffect();
-                        ChekcIfExit();
-                    }
+                    bFlag = true;
+                    BotColor();
+                    Console.WriteLine("EXIT DETECTED!\nCLOSING APP!");
+                    break;
                 }
-                Console.WriteLine();
-            }                     
+                string response = GetResponse(sUserInput);
+                BotColor();
+                Chatbot = response;
+                TypeEffect();
+            }
+        }
+        private static string GetResponse(string userInput)
+        {
+            if (string.IsNullOrWhiteSpace(userInput))
+            {
+                return "Please enter a valid question.";
+            }
+            userInput = userInput.ToLower();
+            if (userInput == "yes" && Chatbot.Contains("Do you need help?"))
+            {
+                return DisplayExampleQuestions();
+            }
+            if (userInput.Contains("password"))
+            {
+                if (userInput.Contains("strong") || userInput.Contains("create"))
+                {
+                    return Responses[6]; // Strong password
+                }
+                return Responses[3]; // General password safety
+            }
+            if (userInput.Contains("phishing"))
+            {
+                if (userInput.Contains("email") || userInput.Contains("detect"))
+                {
+                    return Responses[9]; // Phishing email signs
+                }
+                return Responses[4]; // General phishing info
+            }
+            if (userInput.Contains("safe") && userInput.Contains("browsing"))
+            {
+                return Responses[5]; // Safe browsing
+            }
+            if (userInput.Contains("scam") || userInput.Contains("avoid"))
+            {
+                return Responses[7]; // Avoiding scams
+            }
+            if (userInput.Contains("hacked"))
+            {
+                return Responses[8]; // If you're hacked
+            }
+            if (userInput.Contains("wifi") || userInput.Contains("public network"))
+            {
+                return Responses[10]; // Public Wi-Fi warning
+            }
+            if (userInput.Contains("2fa") || userInput.Contains("two factor"))
+            {
+                return Responses[11]; // 2FA explanation
+            }
+            if (userInput.Contains("update") || userInput.Contains("software"))
+            {
+                return Responses[12]; // Importance of updates
+            }
+            if (userInput.Contains("malware"))
+            {
+                return Responses[13]; // Malware explanation
+            }
+            if (userInput.Contains("personal information") || userInput.Contains("data privacy"))
+            {
+                return Responses[14]; // Protecting personal info
+            }
+            if (userInput.Contains("link"))
+            {
+                return Responses[15]; // If you click a bad link
+            }
+            if (userInput.Contains("https") || userInput.Contains("secure site"))
+            {
+                return Responses[16]; // Secure website tips
+            }
+            if (userInput.Contains("antivirus"))
+            {
+                return Responses[17]; // Antivirus usage
+            }
+            if (userInput.Contains("social media") || userInput.Contains("privacy"))
+            {
+                return Responses[18]; // Social media tips
+            }
+            if (userInput.Contains("firewall"))
+            {
+                return Responses[19]; // Firewall explanation
+            }
+            for (int k = 0; k < Questions.Length; k++)
+            {
+                if (Questions[k].ToLower() == userInput)
+                {
+                    return Responses[k];
+                }
+            }
+            Chatbot = "Do you need help?";
+            return "I'm not sure how to respond to that. Try asking about passwords, phishing, or safe browsing!";
+        }
+        private static string DisplayExampleQuestions()
+        {
+            string examples = "Here are some example questions you can ask:\n";
+            examples += "1. What is password safety?\n";
+            examples += "2. What is phishing?\n";
+            examples += "3. What is safe browsing?\n";
+            examples += "4. How do I avoid scams online?\n";
+            examples += "5. What should I do if I get hacked?\n";
+            return examples;
         }
         static void TextUserInteractionGreeting()
         {
@@ -291,8 +290,7 @@ namespace MzamoLm
                                     + "\n================================\n";
             //TypeEffect
             Chatbot = welcomeMessage;
-            TypeEffect();
-            
+            TypeEffect();            
             //configure
             Random random = new Random();
             welcomeMessage = "\nloading..." + "\n[    ]" + "\n[=   ]" + "\n[==  ]" + "\n[=== ]" + "\n[====]" + "\n[=====]" + "\n[  ===]" + "\n[   ==]\n" ;
