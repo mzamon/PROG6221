@@ -14,6 +14,7 @@ namespace MzamoLm
     public class Program
     {
         public static string Chatbot; //private string so the loop runs many times
+        public static string Username; //user name
         //global array
         public static string[] Questions = {
                                                 "\nHow are you?",
@@ -70,7 +71,7 @@ namespace MzamoLm
             Thread.Sleep(500); 
             
             //display ASCII 
-            DisplayAsciiArt();
+            //DisplayAsciiArt();
 
             //new instance logo
             new AsciiLogo() { };
@@ -88,7 +89,8 @@ namespace MzamoLm
             Chatbot = Console.ReadLine();
             while (!bFlag)
             {
-                BasicResponse();
+                new Interaction() { };
+                BasicResponse();                
             }
 
             BotColor();
@@ -324,6 +326,7 @@ namespace MzamoLm
             TypeEffect();            
             UserColor();
             string sSurname = Console.ReadLine();
+            Username = sName + " " + sSurname;
             ChekcIfExit();
             //personalized greeting 
             //28/03/25
