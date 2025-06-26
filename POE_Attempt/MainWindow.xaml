@@ -1,0 +1,67 @@
+﻿<Window x:Class="POE_Attempt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:POE_Attempt"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid
+        Height = "450"
+        Width = "800"
+        >
+        <materialDesign:Card 
+            Margin="10"
+            UniformCornerRadius="15">
+            <Grid>
+                <Grid.ColumnDefinitions
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <ListView
+                        Margin="0 15">
+                        <ListViewItem HorizontalAlignment="Center"
+                                      Margin="0 10">
+                            <Button 
+                                Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                HorizontalAlignment="Left"
+                                BorderBrush="{x:Null}"
+                                Background="{}"
+                        </ListViewItem>
+                        
+                    </ListView>
+                </Grid>
+
+            </Grid>
+        </materialDesign:Card>
+        
+        <!-- listview to show chats-->
+        <ListView
+            Height= "300"
+            Width= "350"
+            x:Name="show_chats"
+            MouseDoubleClick="show_chats_MouseDoubleClick"
+            Margin="0,0,0,0"
+            />
+        
+        <!-- textbox to collect user input -->
+        <TextBox
+            Height="300"
+            Width="350"
+            x:Name="user_question"
+            Margin="0,250,0,0"
+            />
+        
+        <!-- button to submit question-->
+        <Button
+            Height="30"
+            Width="350"
+            Content="Ask Question"
+            Margin="0,300,0,0"
+            Click="Ask_QuestionButton"
+            />
+
+    </Grid>
+</Window>
