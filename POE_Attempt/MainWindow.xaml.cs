@@ -25,10 +25,48 @@ namespace POE_Attempt
         {
 
         }
-
-        private void Ask_QuestionButton(object sender, RoutedEventArgs e)
+        private void Reminder(object sender, RoutedEventArgs e)
         {
+            //MessageBox.Show("Question submitted");
 
+            //collect data from text box
+            String CollectedQuestion = user_question.Text.ToString();
+            //validation
+            if (!CollectedQuestion.Equals(""))
+            {
+                //check if user wants to add a task
+                if (CollectedQuestion.ToLower().Contains("add task"))
+                {
+                    //add the task to the list view but get date and time
+                    DateTime Date = DateTime.Now.Date;
+                    DateTime Time = DateTime.Now.ToLocalTime();
+
+                    //set up for date
+                    String Date_Format = Date.ToString("yyyy-MM-dd");
+                    String Time_Format = Time.ToString("HH:mm:ss");
+                    MessageBox.Show("Task added successfully");
+                }
+                else if (CollectedQuestion.Contains("reminder") || CollectedQuestion.Contains("Reminder"))
+                {
+                    //show message box
+                    MessageBox.Show("Reminder set successfully");
+                }
+                else
+                {
+                    //show message box
+                    MessageBox.Show("AI response: " + CollectedQuestion);
+                }
+            }
+            else
+            {
+                //error message
+                MessageBox.Show("Please prompt the AI\nYou have entered and empty string!");
+            }
+        }//event handler
+
+        private void AskQuestion(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Question submitted");
         }
     }
 }

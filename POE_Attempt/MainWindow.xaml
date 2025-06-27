@@ -6,19 +6,27 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
-     TextElement.FontSize="13"
-     TextOptions.TextFormattingMode="Ideal"
-     TextOptions.TextRenderingMode="Auto"
-     Background="{DynamicResource MaterialDesignPaper}"
-     FontFamily="{DynamicResource MaterialDesignFont}"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:POE_Attempt"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="450"
+        Height="535"
         Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="/Background.jpg"/>
+    </Window.Background>
 
     <!-- Root Layout Grid -->
-    <Grid>
+    <Grid Height="535">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                <GradientStop Color="Black"/>
+                <GradientStop Color="#FF2CE7FF" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <!-- Header -->
@@ -26,20 +34,30 @@
             <!-- Main Content -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="26*"/>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="121*"/>
+            <ColumnDefinition Width="638*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Header -->
         <Border Grid.Row="0"
-                Background="#00C8FF"
-                Padding="15">
+                Padding="15" Grid.ColumnSpan="5">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF2CE7FF" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <StackPanel>
                 <TextBlock Text="Cybersecurity Awareness Chatbot"
-                           FontSize="24"
+                           FontSize="40"
+                           FontStyle="Italic"
                            FontWeight="Bold"
                            Foreground="White"
                            HorizontalAlignment="Center"
-                           Margin="0,0,0,10"/>
+                           Margin="0,0,0,10" FontFamily="Comic Sans MS" TextDecorations="Underline"/>
                 <TextBlock x:Name="AsciiArtDisplay"
                            FontFamily="Consolas"
                            TextWrapping="Wrap"
@@ -52,8 +70,8 @@
 
         <!-- Main Card Layout -->
         <materialDesign:Card Grid.Row="1"
-                             Margin="10"
-                             UniformCornerRadius="15">
+                             Margin="4,10,10,10"
+                             UniformCornerRadius="15" Grid.ColumnSpan="4" Grid.Column="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -64,24 +82,102 @@
                     <ColumnDefinition Width="3*"/>
                     <!-- Chat Area -->
                 </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="materialDesign:PackIcon">
+                        <Setter Property="Width" Value="90"></Setter>
+                        <Setter Property="Height" Value="30"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FF2CE7FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
 
                 <!-- Sidebar -->
                 <Grid Grid.Column="0" 
                       Width="110"
                       HorizontalAlignment="Left">
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="Black"/>
+                            <GradientStop Color="#FF2CE7FF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                     <ListView 
                         Margin="0 15"
                         Width="100" 
                         HorizontalAlignment="Left">
-
+                        <ListView.Background>
+                            <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                                <GradientStop Color="Black"/>
+                                <GradientStop Color="#FF2CE7FF" Offset="0.3"/>
+                            </LinearGradientBrush>
+                        </ListView.Background>
                         <ListViewItem HorizontalAlignment="Center" Margin="0 10">
-                            <Button Style="{StaticResource MaterialDesignFloatingActionButton}"
+                            <Button 
                                     HorizontalAlignment="Left"
                                     BorderBrush="{x:Null}"
                                     Background="{x:Null}"
                                     Foreground="Black">
                                 <StackPanel Margin="-5">
-                                    <materialDesign:PackIcon Kind="Resistor"/>
+                                    <materialDesign:PackIcon Kind="Person" Opacity="0.985"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+                        <ListViewItem HorizontalAlignment="Center" Margin="0 10">
+                            <Button 
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black">
+                                <StackPanel Margin="-5">
+                                    <materialDesign:PackIcon Kind="CircleSlice6"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+                        <ListViewItem HorizontalAlignment="Center" Margin="0 10">
+                            <Button Click="Reminder"
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black">
+                                <StackPanel Margin="-5">
+                                    <materialDesign:PackIcon Kind="CalendarBlankOutline"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+                        <ListViewItem HorizontalAlignment="Center" Margin="0 10">
+                            <Button 
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black">
+                                <StackPanel Margin="-5">
+                                    <materialDesign:PackIcon Kind="EqualiserVertical"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+                        <ListViewItem HorizontalAlignment="Center" Margin="0 10">
+                            <Button 
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black">
+                                <StackPanel Margin="-5">
+                                    <materialDesign:PackIcon Kind="ChatBubbleOutline"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+                        <ListViewItem HorizontalAlignment="Center" Margin="0 15 0 0">
+                            <Button 
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="{x:Null}"
+                                    Background="{x:Null}"
+                                    Foreground="Black">
+                                <StackPanel Margin="-5">
+                                    <materialDesign:PackIcon Kind="ExitToApp"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -92,7 +188,8 @@
                 <Grid Margin="110,10,10,10" 
                       Grid.ColumnSpan="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="47*"/>
+                        <RowDefinition Height="104*"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
@@ -100,23 +197,30 @@
                     <!-- Chat Display -->
                     <ListView x:Name="show_chats"
                               Grid.Row="0"
-                              Height="200"
-                              Margin="0,15,0,25"
+                              Margin="0,0,0,5"
                               MouseDoubleClick="show_chats_MouseDoubleClick"
-                              HorizontalAlignment="Right" 
-                              Width="659"/>
+                              HorizontalAlignment="Center" 
+                              Width="660" Background="#FF2CE7FF" Grid.RowSpan="2"/>
 
                     <!-- Input -->
                     <TextBox x:Name="user_question"
                              Grid.Row="1"
-                             Height="30"
-                             Margin="0,0,0,10"/>
+                             Margin="0,207,0,0" IsReadOnly="True" Text="User:" Grid.RowSpan="3">
+                        <TextBox.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black"/>
+                                <GradientStop Color="Black" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TextBox.Background>
+                    </TextBox>
 
                     <!-- Submit Button -->
-                    <Button 
-                            Grid.Row="2"
-                            Height="30"
-                            Click="Ask_QuestionButton"/>
+                    <Button
+                            Grid.Row="1"
+                            Click="AskQuestion" Margin="552,211,20,5" Background="#FF2CE7FF">
+                        <materialDesign:PackIcon Kind="Send"/>
+                    </Button>
+                    <StackPanel Margin="20"/>
                 </Grid>
             </Grid>
         </materialDesign:Card>
