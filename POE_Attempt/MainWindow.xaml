@@ -122,7 +122,11 @@
                                     Background="{x:Null}"
                                     Foreground="Black">
                                 <StackPanel Margin="-5">
-                                    <materialDesign:PackIcon Kind="Person" Opacity="0.985"/>
+                                    <materialDesign:PackIcon 
+                                        Name="Chat_Bot_Ascii"
+                                        MouseDoubleClick="Show_ChatBot_Ascii"
+                                        Kind="Person" 
+                                        Opacity="0.985"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -133,7 +137,10 @@
                                     Background="{x:Null}"
                                     Foreground="Black">
                                 <StackPanel Margin="-5">
-                                    <materialDesign:PackIcon Kind="CircleSlice6"/>
+                                    <materialDesign:PackIcon 
+                                        Name="Task_Assistant_GUI"
+                                        MouseDoubleClick="Initialize_Task_Assistant"
+                                        Kind="CircleSlice6"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -144,7 +151,10 @@
                                     Background="{x:Null}"
                                     Foreground="Black">
                                 <StackPanel Margin="-5">
-                                    <materialDesign:PackIcon Kind="CalendarBlankOutline"/>
+                                    <materialDesign:PackIcon 
+                                        Name="NLP_Simulation_GUI"
+                                        MouseDoubleClick="show_NLP_Simulation_GUI"
+                                        Kind="EmojiAngryOutline"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -155,7 +165,10 @@
                                     Background="{x:Null}"
                                     Foreground="Black">
                                 <StackPanel Margin="-5">
-                                    <materialDesign:PackIcon Kind="EqualiserVertical"/>
+                                    <materialDesign:PackIcon 
+                                        Name="Cyber_Security_Mini_Game"
+                                        MouseDoubleClick="show_Cyber_Security_Mini_Game"
+                                        Kind="EqualiserVertical"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -166,7 +179,10 @@
                                     Background="{x:Null}"
                                     Foreground="Black">
                                 <StackPanel Margin="-5">
-                                    <materialDesign:PackIcon Kind="ChatBubbleOutline"/>
+                                    <materialDesign:PackIcon 
+                                        Name="Activity_Log"
+                                        MouseDoubleClick="show_Activity_Log"
+                                        Kind="ChatBubbleOutline"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -177,7 +193,10 @@
                                     Background="{x:Null}"
                                     Foreground="Black">
                                 <StackPanel Margin="-5">
-                                    <materialDesign:PackIcon Kind="ExitToApp"/>
+                                    <materialDesign:PackIcon 
+                                        Name="Exit_Application"
+                                        MouseDoubleClick="Exit_App"
+                                        Kind="ExitToApp"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -197,27 +216,21 @@
                     <!-- Chat Display -->
                     <ListView x:Name="show_chats"
                               Grid.Row="0"
-                              Margin="0,0,0,5"
-                              MouseDoubleClick="show_chats_MouseDoubleClick"
+                              Margin="0,0,0,5"                              
                               HorizontalAlignment="Center" 
                               Width="660" Background="#FF2CE7FF" Grid.RowSpan="2"/>
 
                     <!-- Input -->
                     <TextBox x:Name="user_question"
                              Grid.Row="1"
-                             Margin="0,207,0,0" IsReadOnly="True" Text="User:" Grid.RowSpan="3">
-                        <TextBox.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="Black"/>
-                                <GradientStop Color="Black" Offset="1"/>
-                            </LinearGradientBrush>
-                        </TextBox.Background>
-                    </TextBox>
+                             Margin="0,207,97,0" IsReadOnly="False" Grid.RowSpan="3" Background="#FFF3F3F3" FontSize="20"/>
 
                     <!-- Submit Button -->
                     <Button
                             Grid.Row="1"
-                            Click="AskQuestion" Margin="552,211,20,5" Background="#FF2CE7FF">
+                            MouseDoubleClick="show_chats_MouseDoubleClick" 
+                            Margin="572,211,0,5" 
+                            Background="#FF2CE7FF">
                         <materialDesign:PackIcon Kind="Send"/>
                     </Button>
                     <StackPanel Margin="20"/>
