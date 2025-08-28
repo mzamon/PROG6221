@@ -18,8 +18,12 @@ namespace navigation_mvc.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy(string username)
         {
+            //store the viewbagin a colum called user
+            ViewBag.user = username;
+            //example of manual store
+            ViewBag.ex = "Not auto";
             return View();
         }
 
