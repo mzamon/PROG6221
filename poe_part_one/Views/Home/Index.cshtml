@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Contract Monthly Claim System v1.0";
+}
+
+<div class="container" style="max-width: 400px; margin-top:50px;">
+    <h2>@ViewData["Title"] - Login</h2>  
+    
+    <form method="post">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Enter Username" required />
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Enter Password" required />
+        </div>
+
+        <button type="submit" class="btn-submit">Login</button>
+
+        @if (ViewBag.Error != null)
+        {
+            <p style="color:red;">@ViewBag.Error</p>
+        }
+
+        <p style="margin-top:10px;">
+            Login details for testing:<br />
+            <b>Username:</b> admin | <b>Password:</b> admin
+        </p>
+    </form>
+</div>

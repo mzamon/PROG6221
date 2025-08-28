@@ -1236,7 +1236,7 @@ namespace POE_Attempt
             RecentActivities.Add($"{timestamp}: Opened Task Assistant");
         }
 
-        private void Show_ChatBot_Ascii(object sender, RoutedEventArgs e)
+        private async void Show_ChatBot_Ascii(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1258,6 +1258,11 @@ namespace POE_Attempt
 
                 string asciiArt = GenerateAsciiArtFromBitmap(bitmapImage);
                 AsciiArtDisplay.Text = asciiArt;
+                //sleep(1000)
+                await Task.Delay(3000); // In an async method
+                //remove the ASCII art after displaying
+                AsciiArtDisplay.Text = "";
+
 
                 //Welcome message with decorative borders
                 if (UserName == "User") // Only ask for name if we don't have it yet

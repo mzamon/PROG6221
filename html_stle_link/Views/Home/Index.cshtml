@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="`css/style.css"/>
+
+<h1>Hello</h1>
+<h2>Hello 2</h2>
+
+<a href="@Url.Action("Index","Home",new {name = "Mzamo"})">
+    Greet me
+</a>
+
+<!---- This lets you display your name that you have passed after clicling your hyperlink-->
+<p>
+    Hello @ViewBag.user
+</p>
+    
