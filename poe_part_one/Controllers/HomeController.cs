@@ -43,6 +43,15 @@ namespace poe_part_one.Controllers
         {
             return PartialView("Coordinator_View");
         }
+        //Partial ro logout
+        public IActionResult LogoutPartial()
+        {
+            return RedirectToAction("Index", "Home");
+            //return PartialView("Index", "Home");
+            /*Alternative way to logout
+             * return RedirectToAction("Index");
+             */
+        }
         //Partial to open Manager View
         public IActionResult ManagerPartial()
         {
