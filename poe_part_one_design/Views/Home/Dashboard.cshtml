@@ -1,0 +1,63 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Dashboard";
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role");
+    var email = HttpContextAccessor.HttpContext?.Session.GetString("Email");
+}
+
+<div class="container">
+    <h1>Contract Monthly Claim System v1.0</h1>
+    <p>Welcome, @email!</p>
+    <p>
+        Your role is:
+        <span style="color:@(role == "Manager" ? "red" : role == "Coordinator" ? "orange" : "green"); font-weight:bold;">
+            @role
+        </span>
+    </p>
+
+    <!--Navigation-->
+    <nav style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div class="left">
+            @if (role == "Lecturer")
+            {
+                <a href="@Url.Action("LecturerPartial","Home")" class="nav-link">Lecturer View</a>
+            }
+            else if (role == "Coordinator")
+            {
+                <a href="@Url.Action("LecturerPartial","Home")" class="nav-link">Lecturer View</a>
+                <span>|</span>
+                <a href="@Url.Action("CoordinatorPartial","Home")" class="nav-link">Coordinator View</a>
+            }
+            else if (role == "Manager")
+            {
+                <a href="@Url.Action("LecturerPartial","Home")" class="nav-link">Lecturer View</a>
+                <span>|</span>
+                <a href="@Url.Action("CoordinatorPartial","Home")" class="nav-link">Coordinator View</a>
+                <span>|</span>
+                <a href="@Url.Action("ManagerPartial","Home")" class="nav-link">Manager View</a>
+            }
+        </div>
+
+        <div class="right">
+            <a href="@Url.Action("Logout","Home")" class="btn-logout">Logout</a>
+        </div>
+    </nav>
+
+    <div id="partial-container" style="margin-top:20px; border-top:1px solid #ccc; padding-top:15px;">
+        <p>Please select a view from the navigation above.</p>
+    </div>
+</div>
+
+<script>
+
+    document.querySelectorAll('nav a.nav-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            fetch(this.href)
+                .then(r => r.text())
+                .then(html => document.getElementById('partial-container').innerHTML = html);
+        });
+    });
+</script>

@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Login";
+}
+<div class="container" style="max-width:400px; margin-top:50px;">
+    <h2>Contract Monthly Claim System v1.0 - Login</h2>
+    <form method="post">
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required class="form-control" />
+        </div>
+        <button type="submit" class="btn-submit">Login</button>
+        <p style="margin-top:10px;">
+            No account? <a href="@Url.Action("Register","Home")">Register here</a>
+        </p>
+        @if (ViewBag.Error != null)
+        {
+            <p style="color:red;">@ViewBag.Error</p>
+        }
+        <p style="margin-top:10px;">
+            Login details for testing:<br />
+            <b>Email:</b> lecturer@test.com | <b>Password:</b> 123 (Lecturer)<br />
+            <b>Email:</b> coordinator@test.com | <b>Password:</b> 123 (Coordinator)<br />
+            <b>Email:</b> manager@test.com | <b>Password:</b> 123 (Manager)
+        </p>
+    </form>
+</div>

@@ -9,6 +9,51 @@
 	Upon successful login land on desired page -> Lecturer_View|Coordinator_View|Manager_View
 
 	//Note
+		login form
+		<form method="post" action="/Home/Dashbboard">
+			<input type=" email" placeholder="Enter email" />
+			<br>
+			<input type="password" name="Enter password" />
+			</br>
+			<input type="submit" value="Login" />  |-> name="submit"->
+		</form>
+		<br>
+		<p>
+			<a href=@Url.Action("Register", "Home")>register now</a>
+		</p>
+		</br>
+
+	//end
+
+	Return a view for the register
+	There must be an IAction Result
+			Like this
+				public IActionResult Register(){
+					return View();
+				}
+				Then create a view for the register
+	Once you login a succesful Landing page of Login must be displayed
+	Then Proceed to the view desired from one of these. -> Lecturer_View|Coordinator_View|Manager_View
+		Use any selection and comparism style. Index appropriete
+		Drop
+		Use the selected view
+			Index 0 = "Lecturer_View"
+			Index 1 = "Coordinator_View"
+			Index 2 = "Manager_View"	
+	Each view has a privacy rank. 
+	Manager_View > Coordinator_View > Lecturer_View
+		Manager can view all
+		Coordinator can view Lecturer and Coordinator
+		Lecturer can only view Lecturer
+	Use the above to create a simple role based access control
+	Role Hirechiy status must be displayed when creating this
+		Red for Manager
+		Yellow for Coordinator
+		Green for Lecturer
+	//Use bootstrap for styling//
+
+	
+
 
 
 
