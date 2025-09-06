@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-
+using poe_part_one.Models;
+using Microsoft.AspNetCore.Http;
 using poe_part_one_design.Models;
 
-namespace poe_partone.Controllers
+namespace poe_part_one.Controllers
 {
     public class HomeController : Controller
     {
@@ -24,6 +25,12 @@ namespace poe_partone.Controllers
 
         public IActionResult Index()
         {
+            // Check if user is already logged in
+            var role = HttpContext.Session.GetString("Role");
+            if (role != null)
+            {
+                return RedirectToAction("Dashboard");
+            }
             return RedirectToAction("Login");
         }
 
@@ -58,6 +65,7 @@ namespace poe_partone.Controllers
         {
             var role = HttpContext.Session.GetString("Role");
             if (role == null) return RedirectToAction("Login");
+
             ViewBag.Role = role;
             return View();
         }
@@ -78,6 +86,10 @@ namespace poe_partone.Controllers
             return View();
         }
 
-        
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }
