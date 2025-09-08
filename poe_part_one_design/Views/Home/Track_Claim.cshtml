@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Track Claim";
+}
+
+<div class="container" style="max-width:800px; margin-top:30px;">
+    <h2>Track Your Claim</h2>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="lectureId">Enter Lecture ID</label>
+            <input type="text" id="lectureId" name="lectureId" class="form-control" placeholder="Enter your Lecture ID" required />
+        </div>
+        <button type="submit" class="btn-submit">Track Claim</button>
+    </form>
+
+    @if (ViewBag.Error != null)
+    {
+        <p style="color:red; margin-top:15px;">@ViewBag.Error</p>
+    }
+
+    @if (ViewBag.LectureID != null)
+    {
+        <div style="background:#f8f9fa; padding:20px; border-radius:10px; margin:20px 0;">
+            <h3>Claim Details</h3>
+            <table style="width:100%;">
+                <tr>
+                    <td style="width:30%; padding:8px 0;"><strong>Lecture ID:</strong></td>
+                    <td style="padding:8px 0;">@ViewBag.LectureID</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0;"><strong>Hours worked:</strong></td>
+                    <td style="padding:8px 0;">@ViewBag.HoursWorked</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0;"><strong>Hourly Rate:</strong></td>
+                    <td style="padding:8px 0;">R @ViewBag.HourlyRate</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0;"><strong>Additional Notes:</strong></td>
+                    <td style="padding:8px 0;">@ViewBag.AdditionalNotes</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0;"><strong>Supporting Documents:</strong></td>
+                    <td style="padding:8px 0;">@ViewBag.SupportingDocuments</td>
+                </tr>
+            </table>
+
+            <div style="margin-top:20px;">
+                <h4>Claim Status</h4>
+                <div style="background:#bdc3c7; color:#2c3e50; padding:15px; text-align:center; border-radius:5px; font-weight:bold;">
+                    @ViewBag.Status
+                </div>
+            </div>
+        </div>
+    }
+</div>

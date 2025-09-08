@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Claim Submitted";
+}
+
+<div class="container" style="max-width:800px; margin-top:30px;">
+    <h2 style="color:#27ae60; text-align:center;">Claim Submitted Successfully!</h2>
+    <p style="text-align:center;">Your claim has been submitted for processing. Below are your submitted details:</p>
+
+    <div style="background:#f8f9fa; padding:20px; border-radius:10px; margin:20px 0;">
+        <h3>Claim Details</h3>
+        <table style="width:100%;">
+            <tr>
+                <td style="width:30%; padding:8px 0;"><strong>Lecture ID:</strong></td>
+                <td style="padding:8px 0;">@ViewBag.LectureID</td>
+            </tr>
+            <tr>
+                <td style="padding:8px 0;"><strong>Hours worked:</strong></td>
+                <td style="padding:8px 0;">@ViewBag.HoursWorked</td>
+            </tr>
+            <tr>
+                <td style="padding:8px 0;"><strong>Hourly Rate:</strong></td>
+                <td style="padding:8px 0;">R @ViewBag.HourlyRate</td>
+            </tr>
+            <tr>
+                <td style="padding:8px 0;"><strong>Additional Notes:</strong></td>
+                <td style="padding:8px 0;">@ViewBag.AdditionalNotes</td>
+            </tr>
+            <tr>
+                <td style="padding:8px 0;"><strong>Supporting Documents:</strong></td>
+                <td style="padding:8px 0;">@ViewBag.SupportingDocuments</td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="display:flex; justify-content:center; gap:20px; margin-top:30px;">
+        <a href="@Url.Action("TrackClaim","Home")" class="btn-submit" style="width:200px; text-align:center;">Track This Claim</a>
+        <a href="@Url.Action("LecturerPartial","Home")" class="btn-submit" style="width:200px; text-align:center; background:#7f8c8d;">Submit Another Claim</a>
+    </div>
+</div>

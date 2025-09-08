@@ -5,11 +5,12 @@
     ViewData["Title"] = "Dashboard";
     var role = HttpContextAccessor.HttpContext?.Session.GetString("Role");
     var email = HttpContextAccessor.HttpContext?.Session.GetString("Email");
+    var firstName = HttpContextAccessor.HttpContext?.Session.GetString("FirstName");
 }
 
 <div class="container">
     <h1>Contract Monthly Claim System v1.0</h1>
-    <p>Welcome, @email!</p>
+    <p>Welcome, <strong>@firstName</strong>! (@email)</p>
     <p>
         Your role is:
         <span style="color:@(role == "Manager" ? "red" : role == "Coordinator" ? "orange" : "green"); font-weight:bold;">

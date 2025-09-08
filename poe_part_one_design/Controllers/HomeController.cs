@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using poe_part_one.Models;
 using Microsoft.AspNetCore.Http;
 using poe_part_one_design.Models;
@@ -8,20 +7,19 @@ namespace poe_part_one.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         // Fake in-memory storage
         private static List<User> Users = new List<User>
         {
-            new User { Email = "lecturer@test.com", Password = "123", Role = "Lecturer" },
-            new User { Email = "coordinator@test.com", Password = "123", Role = "Coordinator" },
-            new User { Email = "manager@test.com", Password = "123", Role = "Manager" }
+            new User { FirstName = "John", Surname = "Doe", Email = "lecturer@test.com", Password = "123", Role = "Lecturer" },
+            new User { FirstName = "Jane", Surname = "Smith", Email = "coordinator@test.com", Password = "123", Role = "Coordinator" },
+            new User { FirstName = "Admin", Surname = "User", Email = "manager@test.com", Password = "123", Role = "Manager" }
         };
 
-        public HomeController(ILogger<HomeController> logger)
+        // Store claims in memory
+        private static List<ClaimSubmission> Claims = new List<ClaimSubmission>
         {
-            _logger = logger;
-        }
+            new ClaimSubmission { LectureID = "1001", HoursWorked = 10, HourlyRate = 400, AdditionalNotes = "Test Data", SupportingDocuments = "Class Register.pdf" }
+        };
 
         public IActionResult Index()
         {
@@ -38,10 +36,30 @@ namespace poe_part_one.Controllers
         public IActionResult Register() => View();
 
         [HttpPost]
-        public IActionResult Register(string email, string password, string role)
+        public IActionResult Register(string firstName, string surname, string email, string password, string role)
         {
-            Users.Add(new User { Email = email, Password = password, Role = role });
-            return RedirectToAction("Login");
+            Users.Add(new User
+            {
+                FirstName = firstName,
+                Surname = surname,
+                Email = email,
+                Password = password,
+                Role = role
+            });
+
+            HttpContext.Session.SetString("FirstName", firstName);
+            HttpContext.Session.SetString("Surname", surname);
+            HttpContext.Session.SetString("Email", email);
+
+            return RedirectToAction("Registration_Success");
+        }
+
+        public IActionResult Registration_Success()
+        {
+            var firstName = HttpContext.Session.GetString("FirstName");
+            var surname = HttpContext.Session.GetString("Surname");
+            ViewBag.Name = $"{firstName} {surname}";
+            return View();
         }
 
         [HttpGet]
@@ -55,6 +73,8 @@ namespace poe_part_one.Controllers
             {
                 HttpContext.Session.SetString("Role", user.Role);
                 HttpContext.Session.SetString("Email", user.Email);
+                HttpContext.Session.SetString("FirstName", user.FirstName);
+                HttpContext.Session.SetString("Surname", user.Surname);
                 return RedirectToAction("Dashboard");
             }
             ViewBag.Error = "Invalid credentials!";
@@ -86,6 +106,66 @@ namespace poe_part_one.Controllers
             return View();
         }
 
-        // REMOVED the Error action method since you deleted Error.cshtml
+        // New actions for claim submission
+        [HttpPost]
+        public IActionResult SubmitClaim(string lectureId, int hoursWorked, decimal hourlyRate, string additionalNotes)
+        {
+            var claim = new ClaimSubmission
+            {
+                LectureID = lectureId,
+                HoursWorked = hoursWorked,
+                HourlyRate = hourlyRate,
+                AdditionalNotes = additionalNotes,
+                SupportingDocuments = "Class Register.pdf" // Hardcoded for now
+            };
+
+            Claims.Add(claim);
+
+            // Store in session for display
+            HttpContext.Session.SetString("LastLectureID", lectureId);
+            HttpContext.Session.SetInt32("LastHoursWorked", hoursWorked);
+            HttpContext.Session.SetString("LastHourlyRate", hourlyRate.ToString());
+            HttpContext.Session.SetString("LastAdditionalNotes", additionalNotes);
+
+            return RedirectToAction("Claim_Success");
+        }
+
+        public IActionResult Claim_Success()
+        {
+            ViewBag.LectureID = HttpContext.Session.GetString("LastLectureID");
+            ViewBag.HoursWorked = HttpContext.Session.GetInt32("LastHoursWorked");
+            ViewBag.HourlyRate = HttpContext.Session.GetString("LastHourlyRate");
+            ViewBag.AdditionalNotes = HttpContext.Session.GetString("LastAdditionalNotes");
+            ViewBag.SupportingDocuments = "Class Register.pdf";
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Track_Claim()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Track_Claim(string lectureId)
+        {
+            var claim = Claims.FirstOrDefault(c => c.LectureID == lectureId);
+            if (claim != null)
+            {
+                ViewBag.LectureID = claim.LectureID;
+                ViewBag.HoursWorked = claim.HoursWorked;
+                ViewBag.HourlyRate = claim.HourlyRate;
+                ViewBag.AdditionalNotes = claim.AdditionalNotes;
+                ViewBag.SupportingDocuments = claim.SupportingDocuments;
+                ViewBag.Status = "Pending";
+            }
+            else
+            {
+                ViewBag.Error = "Claim not found with the provided Lecture ID";
+            }
+
+            return View();
+        }
     }
 }

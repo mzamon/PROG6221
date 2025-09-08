@@ -5,20 +5,24 @@
 		Lecturer Claim Submission
 	</h2>
 
-	<form>
+	<form action="@Url.Action("SubmitClaim","Home")" method="post">
+		<div class="form-group">
+			<label for="lectureId">Lecture ID</label>
+			<input type="text" id="lectureId" name="lectureId" class="form-control" placeholder="Enter Lecture ID" required />
+		</div>
 		<div class="form-group">
 			<label for="hours">Hours Worked</label>
-			<input type="number" id="hours" class="form-control" placeholder="Enter hours" />
+			<input type="number" id="hours" name="hoursWorked" class="form-control" placeholder="Enter hours" required />
 		</div>
 
 		<div class="form-group">
-			<label for="rate">Hourly Rate</label>
-			<input type="number" id="rate" class="form-control" placeholder="Enter rate" />
+			<label for="rate">Hourly Rate (R)</label>
+			<input type="number" id="rate" name="hourlyRate" class="form-control" placeholder="Enter rate" required />
 		</div>
 
 		<div class="form-group">
 			<label for="notes">Additional Notes</label>
-			<textarea id="notes" class="form-control" placeholder="Enter Notes"></textarea>
+			<textarea id="notes" name="additionalNotes" class="form-control" placeholder="Enter Notes"></textarea>
 		</div>
 
 		<div class="form-group">
@@ -26,6 +30,6 @@
 			<input type="file" id="upload" class="form-control" />
 		</div>
 
-		<button type="button" class="btn-submit">Submit Claim</button>
+		<button type="submit" class="btn-submit">Submit Claim</button>
 	</form>
 </div>

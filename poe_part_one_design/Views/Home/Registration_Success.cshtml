@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Registration Successful";
+}
+
+<div class="container" style="max-width:600px; margin-top:50px; text-align:center;">
+    <h2 style="color:#27ae60;">Registration Successful!</h2>
+    <div style="background:#f8f9fa; padding:20px; border-radius:10px; margin:20px 0;">
+        <p>Congratulations <strong>@ViewBag.Name</strong>, your account has been successfully created.</p>
+        <p>You can now login with your credentials.</p>
+    </div>
+    <a href="@Url.Action("Login","Home")" class="btn-submit" style="width:200px; margin:0 auto;">Proceed to Login</a>
+</div>
