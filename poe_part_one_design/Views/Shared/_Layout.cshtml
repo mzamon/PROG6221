@@ -1,17 +1,40 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <!--Title-->
-    <title>@ViewData["Title"] - CMCS</title>
-    <link rel="stylesheet" href="~/css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Contract Monthly Claim System</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
 </head>
 <body>
+    <!-- Natural Background Elements -->
+    <div class="nature-background">
+        <div class="floating-leaf leaf-1"></div>
+        <div class="floating-leaf leaf-2"></div>
+        <div class="floating-leaf leaf-3"></div>
+        <div class="floating-leaf leaf-4"></div>
+    </div>
+
     <div class="container">
-        <!-- Application Title -->
+        <!-- Organic Border -->
+        <div class="organic-border"></div>
+
+        <!-- Application Title - Always at the top -->
         <h1 class="app-title">Contract Monthly Claim System v1.0</h1>
 
         @RenderBody()
+
+        <!-- Copyright - Always at the bottom -->
+        <div class="copyright">
+            <p>&copy; 2024 Contract Monthly Claim System. All rights reserved.</p>
+        </div>
     </div>
+
+    <!-- Include JavaScript files -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/form_animation.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,36 +1,91 @@
 ﻿@* Partial: Coordinator View *@
 <div class="coordinator-view">
+    <h2>Coordinator Claim Verification</h2>
+    <p>Below are the claims submitted by lecturers for verification:</p>
 
-	<h2>Coordinator Claim Verification</h2>
+    <div class="claim-item">
+        <div class="claim-header">
+            <div class="claim-lecturer">Mzamo Ndlovu</div>
+            <div class="claim-id">Lecture ID: 1001</div>
+        </div>
 
-	<!--Test Message-->
-	<p>Below are the claims submitted by lecturers Test data is used below?</p>
+        <div class="claim-details-grid">
+            <div class="detail-item">
+                <div class="detail-label">Hours</div>
+                <div class="detail-value">10</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Rate</div>
+                <div class="detail-value">R 550.00</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Total</div>
+                <div class="detail-value">R 5,500.00</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Status</div>
+                <div class="detail-value">Pending Review</div>
+            </div>
+        </div>
 
-	<table class="claims-table">
-		<thead>
-			<tr>
-				<th>Lecturer</th>
-				<th>Hours</th>
-				<th>Rate</th>
-				<th>Notes</th>
-				<th>Documents</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<!--Sample Data-->
-		<tbody>
-			<tr>
-				<td>Mzamo Ndlovu</td>
-				<td>10</td>
-				<td>R550</td>
-				<td>Tutor classes</td>
-				<!--This must be able to view pdf-->
-				<td><a href="#">view.pdf</a></td>
-				<td>
-					<button class="btn-approve">Approve</button>
-					<button class="btn-reject">Reject</button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+        <div class="detail-item">
+            <div class="detail-label">Notes</div>
+            <div class="detail-value">Tutor classes for advanced programming</div>
+        </div>
+
+        <div class="detail-item">
+            <div class="detail-label">Documents</div>
+            <div class="detail-value">
+                <a href="#" style="color: #2196f3; text-decoration: none;">📄 Class Register.pdf</a>
+            </div>
+        </div>
+
+        <div class="claim-actions">
+            <button class="btn-approve">Approve</button>
+            <button class="btn-reject">Reject</button>
+        </div>
+    </div>
+
+    <div class="claim-item">
+        <div class="claim-header">
+            <div class="claim-lecturer">Thabang Ncube</div>
+            <div class="claim-id">Lecture ID: 1002</div>
+        </div>
+
+        <div class="claim-details-grid">
+            <div class="detail-item">
+                <div class="detail-label">Hours</div>
+                <div class="detail-value">8</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Rate</div>
+                <div class="detail-value">R 600.00</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Total</div>
+                <div class="detail-value">R 4,800.00</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Status</div>
+                <div class="detail-value">Pending Review</div>
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="detail-label">Notes</div>
+            <div class="detail-value">Guest lecture on software architecture</div>
+        </div>
+
+        <div class="detail-item">
+            <div class="detail-label">Documents</div>
+            <div class="detail-value">
+                <a href="#" style="color: #2196f3; text-decoration: none;">📄 Presentation Slides.pptx</a>
+            </div>
+        </div>
+
+        <div class="claim-actions">
+            <button class="btn-approve">Approve</button>
+            <button class="btn-reject">Reject</button>
+        </div>
+    </div>
 </div>

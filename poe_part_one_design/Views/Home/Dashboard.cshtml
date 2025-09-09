@@ -6,59 +6,70 @@
     var role = HttpContextAccessor.HttpContext?.Session.GetString("Role");
     var email = HttpContextAccessor.HttpContext?.Session.GetString("Email");
     var firstName = HttpContextAccessor.HttpContext?.Session.GetString("FirstName");
+    var surname = HttpContextAccessor.HttpContext?.Session.GetString("Surname");
 }
 
-<div class="container">
-    <h1>Contract Monthly Claim System v1.0</h1>
-    <p>Welcome, <strong>@firstName</strong>! (@email)</p>
-    <p>
-        Your role is:
-        <span style="color:@(role == "Manager" ? "red" : role == "Coordinator" ? "orange" : "green"); font-weight:bold;">
-            @role
-        </span>
-    </p>
-
-    <!--Navigation-->
-    <nav style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <div class="left">
-            @if (role == "Lecturer")
-            {
-                <a href="@Url.Action("LecturerPartial","Home")" class="nav-link">Lecturer View</a>
-            }
-            else if (role == "Coordinator")
-            {
-                <a href="@Url.Action("LecturerPartial","Home")" class="nav-link">Lecturer View</a>
-                <span>|</span>
-                <a href="@Url.Action("CoordinatorPartial","Home")" class="nav-link">Coordinator View</a>
-            }
-            else if (role == "Manager")
-            {
-                <a href="@Url.Action("LecturerPartial","Home")" class="nav-link">Lecturer View</a>
-                <span>|</span>
-                <a href="@Url.Action("CoordinatorPartial","Home")" class="nav-link">Coordinator View</a>
-                <span>|</span>
-                <a href="@Url.Action("ManagerPartial","Home")" class="nav-link">Manager View</a>
-            }
+<div class="dashboard-container">
+    <div class="user-welcome">
+        <h2>Welcome, <strong>@firstName @surname</strong>!</h2>
+        <p>Email: @email</p>
+        <div class="user-role @("role-" + role?.ToLower())">
+            Role: @role
         </div>
+    </div>
 
-        <div class="right">
-            <a href="@Url.Action("Logout","Home")" class="btn-logout">Logout</a>
-        </div>
-    </nav>
+    <!-- Navigation -->
+    <div class="dashboard-nav">
+        @if (role == "Lecturer")
+        {
+            <a href="@Url.Action("LecturerPartial","Home")" class="nav-link">Submit Claim</a>
+            <a href="@Url.Action("Track_Claim","Home")" class="nav-link">Track Claim</a>
+        }
+        else if (role == "Coordinator")
+        {
+            <a href="@Url.Action("LecturerPartial","Home")" class="nav-link">Submit Claim</a>
+            <a href="@Url.Action("Track_Claim","Home")" class="nav-link">Track Claim</a>
+            <a href="@Url.Action("CoordinatorPartial","Home")" class="nav-link">Verify Claims</a>
+        }
+        else if (role == "Manager")
+        {
+            <a href="@Url.Action("LecturerPartial","Home")" class="nav-link">Submit Claim</a>
+            <a href="@Url.Action("Track_Claim","Home")" class="nav-link">Track Claim</a>
+            <a href="@Url.Action("CoordinatorPartial","Home")" class="nav-link">Verify Claims</a>
+            <a href="@Url.Action("ManagerPartial","Home")" class="nav-link">Approve Claims</a>
+        }
+        <a href="@Url.Action("Logout","Home")" class="nav-link" style="background:rgba(244,67,54,0.1);color:#c62828;border-color:rgba(244,67,54,0.2);">Logout</a>
+    </div>
 
-    <div id="partial-container" style="margin-top:20px; border-top:1px solid #ccc; padding-top:15px;">
-        <p>Please select a view from the navigation above.</p>
+    <div id="partial-container" class="partial-container">
+        <p style="text-align:center;color:#666;">Please select an option from the navigation above.</p>
     </div>
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const partialContainer = document.getElementById('partial-container');
 
-    document.querySelectorAll('nav a.nav-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            fetch(this.href)
-                .then(r => r.text())
-                .then(html => document.getElementById('partial-container').innerHTML = html);
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Show loading state
+                partialContainer.innerHTML = '<div style="text-align:center;padding:40px;"><div class="button-growth" style="justify-content:center;"><span class="growing-circle circle-1"></span><span class="growing-circle circle-2"></span><span class="growing-circle circle-3"></span></div><p>Loading...</p></div>';
+
+                fetch(this.href)
+                    .then(response => response.text())
+                    .then(html => {
+                        partialContainer.innerHTML = html;
+                        // Re-initialize any interactive elements in the loaded partial
+                        if (typeof initPasswordToggles === 'function') initPasswordToggles();
+                        if (typeof initFormAnimations === 'function') initFormAnimations();
+                    })
+                    .catch(error => {
+                        partialContainer.innerHTML = '<div style="color:red;text-align:center;padding:20px;">Error loading content. Please try again.</div>';
+                    });
+            });
         });
     });
 </script>

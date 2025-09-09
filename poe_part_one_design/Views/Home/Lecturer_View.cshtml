@@ -1,35 +1,275 @@
-﻿@* Partial: Lecturer View*@
-
+﻿@* Partial: Lecturer View *@
 <div class="lecturer-view">
-	<h2>
-		Lecturer Claim Submission
-	</h2>
+    <h2>Lecturer Claim Submission</h2>
 
-	<form action="@Url.Action("SubmitClaim","Home")" method="post">
-		<div class="form-group">
-			<label for="lectureId">Lecture ID</label>
-			<input type="text" id="lectureId" name="lectureId" class="form-control" placeholder="Enter Lecture ID" required />
-		</div>
-		<div class="form-group">
-			<label for="hours">Hours Worked</label>
-			<input type="number" id="hours" name="hoursWorked" class="form-control" placeholder="Enter hours" required />
-		</div>
+    <form id="claimForm" action="@Url.Action("SubmitClaim","Home")" method="post" class="organic-form">
+        <div class="organic-field">
+            <div class="field-nature"></div>
+            <input type="text" id="lectureId" name="lectureId" placeholder=" " required />
+            <label for="lectureId">Lecture ID</label>
+            <div class="growth-indicator">
+                <div class="leaf-sprout"></div>
+            </div>
+        </div>
 
-		<div class="form-group">
-			<label for="rate">Hourly Rate (R)</label>
-			<input type="number" id="rate" name="hourlyRate" class="form-control" placeholder="Enter rate" required />
-		</div>
+        <div class="organic-field">
+            <div class="field-nature"></div>
+            <input type="number" id="hours" name="hoursWorked" placeholder=" " required min="1" />
+            <label for="hours">Hours Worked</label>
+            <div class="growth-indicator">
+                <div class="leaf-sprout"></div>
+            </div>
+        </div>
 
-		<div class="form-group">
-			<label for="notes">Additional Notes</label>
-			<textarea id="notes" name="additionalNotes" class="form-control" placeholder="Enter Notes"></textarea>
-		</div>
+        <div class="organic-field">
+            <div class="field-nature"></div>
+            <input type="number" id="rate" name="hourlyRate" placeholder=" " required step="0.01" min="0" />
+            <label for="rate">Hourly Rate (R)</label>
+            <div class="growth-indicator">
+                <div class="leaf-sprout"></div>
+            </div>
+        </div>
 
-		<div class="form-group">
-			<label for="upload">Upload Supporting Documents</label>
-			<input type="file" id="upload" class="form-control" />
-		</div>
+        <div class="organic-field">
+            <div class="field-nature"></div>
+            <textarea id="notes" name="additionalNotes" placeholder=" " rows="4"></textarea>
+            <label for="notes">Additional Notes</label>
+            <div class="growth-indicator">
+                <div class="leaf-sprout"></div>
+            </div>
+        </div>
 
-		<button type="submit" class="btn-submit">Submit Claim</button>
-	</form>
+        <!-- File Upload Section -->
+        <div class="file-upload-container">
+            <label class="file-upload-label">Supporting Documents</label>
+            <div class="file-upload-box" id="fileDropArea">
+                <div class="file-upload-icon">📎</div>
+                <div class="file-upload-text">Drag & drop files here or click to browse</div>
+                <button type="button" class="file-upload-button" onclick="document.getElementById('fileInput').click()">
+                    Browse Files
+                </button>
+                <input type="file" id="fileInput" class="file-upload-input" multiple onchange="handleFileSelect(this.files)">
+            </div>
+
+            <div class="uploaded-files" id="uploadedFiles">
+                <!-- Uploaded files will appear here -->
+            </div>
+        </div>
+
+        <button type="submit" class="harmony-button">
+            <span class="button-earth"></span>
+            <span class="button-text">Submit Claim</span>
+            <span class="button-growth">
+                <span class="growing-circle circle-1"></span>
+                <span class="growing-circle circle-2"></span>
+                <span class="growing-circle circle-3"></span>
+            </span>
+            <span class="button-aura"></span>
+        </button>
+    </form>
+
+    <!-- Claim Summary (initially hidden) -->
+    <div id="claimSummary" class="claim-summary" style="display: none;">
+        <h3>Claim Summary</h3>
+        <div class="summary-item">
+            <span class="summary-label">Lecture ID:</span>
+            <span class="summary-value" id="summaryLectureId"></span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Hours Worked:</span>
+            <span class="summary-value" id="summaryHours"></span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Hourly Rate:</span>
+            <span class="summary-value" id="summaryRate"></span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Additional Notes:</span>
+            <span class="summary-value" id="summaryNotes"></span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Supporting Documents:</span>
+            <span class="summary-value" id="summaryDocuments">0 files</span>
+        </div>
+        <div class="summary-total">
+            <span class="total-label">Total Amount:</span>
+            <span class="total-value" id="summaryTotal">R 0.00</span>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button type="button" class="btn-primary" onclick="submitClaim()">Confirm Submission</button>
+            <button type="button" class="btn-secondary" onclick="hideSummary()">Edit Details</button>
+        </div>
+    </div>
 </div>
+
+<script>
+    let uploadedFiles = [];
+
+    function handleFileSelect(files) {
+        const uploadedFilesContainer = document.getElementById('uploadedFiles');
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            uploadedFiles.push(file);
+
+            const fileElement = document.createElement('div');
+            fileElement.className = 'uploaded-file';
+            fileElement.innerHTML = `
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-size">${formatFileSize(file.size)}</div>
+                </div>
+                <div class="file-remove" onclick="removeFile(${uploadedFiles.length - 1})">✕</div>
+            `;
+
+            uploadedFilesContainer.appendChild(fileElement);
+        }
+
+        updateSummary();
+    }
+
+    function removeFile(index) {
+        uploadedFiles.splice(index, 1);
+        updateUploadedFilesDisplay();
+        updateSummary();
+    }
+
+    function updateUploadedFilesDisplay() {
+        const uploadedFilesContainer = document.getElementById('uploadedFiles');
+        uploadedFilesContainer.innerHTML = '';
+
+        uploadedFiles.forEach((file, index) => {
+            const fileElement = document.createElement('div');
+            fileElement.className = 'uploaded-file';
+            fileElement.innerHTML = `
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-size">${formatFileSize(file.size)}</div>
+                </div>
+                <div class="file-remove" onclick="removeFile(${index})">✕</div>
+            `;
+
+            uploadedFilesContainer.appendChild(fileElement);
+        });
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function updateSummary() {
+        const lectureId = document.getElementById('lectureId').value;
+        const hours = document.getElementById('hours').value;
+        const rate = document.getElementById('rate').value;
+        const notes = document.getElementById('notes').value;
+
+        document.getElementById('summaryLectureId').textContent = lectureId || '-';
+        document.getElementById('summaryHours').textContent = hours || '0';
+        document.getElementById('summaryRate').textContent = rate ? 'R ' + parseFloat(rate).toFixed(2) : 'R 0.00';
+        document.getElementById('summaryNotes').textContent = notes || '-';
+        document.getElementById('summaryDocuments').textContent = uploadedFiles.length + ' file(s)';
+
+        // Calculate total
+        const total = hours && rate ? (parseFloat(hours) * parseFloat(rate)).toFixed(2) : '0.00';
+        document.getElementById('summaryTotal').textContent = 'R ' + total;
+    }
+
+    function showSummary() {
+        updateSummary();
+        document.getElementById('claimForm').style.display = 'none';
+        document.getElementById('claimSummary').style.display = 'block';
+
+        // Scroll to summary
+        document.getElementById('claimSummary').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function hideSummary() {
+        document.getElementById('claimSummary').style.display = 'none';
+        document.getElementById('claimForm').style.display = 'block';
+
+        // Scroll back to form
+        document.getElementById('claimForm').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitClaim() {
+        // Show loading animation
+        const submitButton = document.querySelector('.harmony-button');
+        if (submitButton) {
+            submitButton.classList.add('loading');
+        }
+
+        // Create a simple form submission (since we can't actually upload files without backend support)
+        const formData = new FormData();
+        formData.append('lectureId', document.getElementById('lectureId').value);
+        formData.append('hoursWorked', document.getElementById('hours').value);
+        formData.append('hourlyRate', document.getElementById('rate').value);
+        formData.append('additionalNotes', document.getElementById('notes').value);
+
+        // Simulate form submission
+        setTimeout(() => {
+            // Redirect to success page
+            window.location.href = '@Url.Action("Claim_Success", "Home")';
+        }, 1500);
+    }
+
+    // Add event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('claimForm');
+        const inputs = form.querySelectorAll('input, textarea');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', updateSummary);
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showSummary();
+        });
+
+        // Drag and drop functionality
+        const dropArea = document.getElementById('fileDropArea');
+
+        if (dropArea) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                dropArea.style.borderColor = '#2196f3';
+                dropArea.style.background = 'rgba(33, 150, 243, 0.1)';
+            }
+
+            function unhighlight() {
+                dropArea.style.borderColor = 'rgba(33, 150, 243, 0.3)';
+                dropArea.style.background = 'rgba(255, 255, 255, 0.5)';
+            }
+
+            dropArea.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFileSelect(files);
+            }
+        }
+    });
+</script>

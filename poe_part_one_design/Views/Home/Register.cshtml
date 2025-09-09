@@ -2,36 +2,137 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Register";
 }
-<div class="container" style="max-width:400px; margin-top:30px;">
-    <h2>Register</h2>
-    <form method="post">
-        <div class="form-group">
-            <label>First Name</label>
-            <input type="text" name="firstName" required class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Surname</label>
-            <input type="text" name="surname" required class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" required class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" required class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Role</label>
-            <select name="role" class="form-control">
-                <option value="Lecturer">Lecturer (Green)</option>
-                <option value="Coordinator">Coordinator (Yellow)</option>
-                <option value="Manager">Manager (Red)</option>
-            </select>
-        </div>
-        <button type="submit" class="btn-submit">Register</button>
-        <p style="margin-top:10px;">
-            Already have an account? <a href="@Url.Action("Login","Home")">Login here</a>
-        </p>
-    </form>
+
+<div class="mindful-header">
+    <div class="zen-logo">
+        <div class="zen-glow"></div>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <line x1="20" y1="8" x2="20" y2="14"></line>
+            <line x1="23" y1="11" x2="17" y2="11"></line>
+        </svg>
+    </div>
+    <h1>Create Account</h1>
+    <p>Join us to get started</p>
 </div>
+
+<form method="post">
+    <div class="organic-field">
+        <div class="field-nature"></div>
+        <input type="text" name="firstName" placeholder=" " required />
+        <label>First Name</label>
+        <div class="growth-indicator">
+            <div class="leaf-sprout"></div>
+        </div>
+    </div>
+
+    <div class="organic-field">
+        <div class="field-nature"></div>
+        <input type="text" name="surname" placeholder=" " required />
+        <label>Surname</label>
+        <div class="growth-indicator">
+            <div class="leaf-sprout"></div>
+        </div>
+    </div>
+
+    <div class="organic-field">
+        <div class="field-nature"></div>
+        <input type="email" name="email" placeholder=" " required />
+        <label>Email Address</label>
+        <div class="growth-indicator">
+            <div class="leaf-sprout"></div>
+        </div>
+    </div>
+
+    <div class="organic-field">
+        <div class="field-nature"></div>
+        <input type="password" name="password" placeholder=" " required />
+        <label>Password</label>
+        <div class="growth-indicator">
+            <div class="leaf-sprout"></div>
+        </div>
+        <button type="button" class="nature-toggle">
+            <svg class="eye-visible" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg class="eye-hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+        </button>
+    </div>
+
+    <div class="organic-field">
+        <div class="field-nature"></div>
+        <select name="role" required>
+            <option value="" disabled selected></option>
+            <option value="Lecturer">Lecturer</option>
+            <option value="Coordinator">Coordinator</option>
+            <option value="Manager">Manager</option>
+        </select>
+        <label>Role</label>
+        <div class="growth-indicator">
+            <div class="leaf-sprout"></div>
+        </div>
+    </div>
+
+    <div class="mindful-options">
+        <label class="zen-checkbox">
+            <input type="checkbox" name="terms" required />
+            <span class="checkbox-leaf">
+                <span class="leaf-shape"></span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </span>
+            I agree to the terms and conditions
+        </label>
+    </div>
+
+    <button type="submit" class="harmony-button">
+        <span class="button-earth"></span>
+        <span class="button-text">Create Account</span>
+        <span class="button-growth">
+            <span class="growing-circle circle-1"></span>
+            <span class="growing-circle circle-2"></span>
+            <span class="growing-circle circle-3"></span>
+        </span>
+        <span class="button-aura"></span>
+    </button>
+
+    <div class="nurture-signup">
+        <p>Already have an account? <a href="@Url.Action("Login","Home")" class="growth-link">Sign in here</a></p>
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle password visibility
+        const toggleButtons = document.querySelectorAll('.nature-toggle');
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.classList.toggle('toggle-visible');
+            });
+        });
+
+        // Form submission animation
+        const form = document.querySelector('form');
+        const submitButton = form.querySelector('.harmony-button');
+
+        form.addEventListener('submit', function(e) {
+            if (!form.checkValidity()) return;
+
+            submitButton.classList.add('loading');
+
+            // Simulate loading for demo purposes
+            setTimeout(() => {
+                submitButton.classList.remove('loading');
+            }, 2000);
+        });
+    });
+</script>
